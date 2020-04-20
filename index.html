@@ -1,0 +1,253 @@
+<DOCTYPE html>
+<html lang="en">
+    <style>
+
+path.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+
+circle {
+  fill: #ccc;
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+text {
+  fill: #000;
+  font: 10px sans-serif;
+  pointer-events: none;
+}
+
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 150px;
+    height: 28px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: lightgray;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+           </style>
+    <head>
+        <meta charset="utf-8">
+        <title>Stocks</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.1/d3.min.js"></script>
+    </head>
+    <body>
+
+        <div class="container">
+            <br />
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-6">
+                        DEPENDENCY AMONG ECONOMIES, MEASURED BY MAIN STOCK INDICES
+                    </h1>
+                    <hr class="my-4">
+                    <p>Our Projects goal was to  Analyze economic dependency among economies by measuring the strength, direction,and relationship between their main stock indices, and how these relationships have changed over timethrough a practical visualization.</p>
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                            Each circle represents a globally listed international index. These indices are representative of economic power of their respective economies and can vary greatly from day to day.  The graphic below demonstrates many properties of each of these indices and their relationships on one another.
+                            </p>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="col-6">
+                            <img src="./images/image.png" class="img-fluid img-thumbnail"
+                                alt="explination of graph">
+                        </div>
+                        <div class="col-6">
+                            <p>
+                                The circle color is representative of the appreciation or devaluation that each index experienced within the given time frame. Closer to white for no changes, darker green for increases in value and darker red to represent decreases in value.
+                            </p>
+                            <p>
+                                The size of the circle represents the scaled (logarithmic) Market Capitalization of the index. The larger the circle, the more valuable the index.  Hovering over each of these circles reveals additional information regarding the specific index.
+                            </p>
+
+                            <p>
+                            The arrows from one circle to another represent a one-day lag relationship and vary in thickness to represent the strength of the relationship and in color to represent the direction of the relationship. For example, a thick green arrow from index A to index B would mean that after a change in A is observed, we mathematically conclude that a predictable change in B occurred on the following day. The line color of green shows that index B can be expected to move in the same direction as index A (whether up or down), and the opposite would be true were the line red. The thicker the arrow, the more we expect the target index to move in proportion to the source index.
+                            </p>
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <br />
+
+            <div class="row">
+
+                <div class="col-2">
+
+
+                    <button type="button" class="btn btn-secondary"
+                        onClick="show_model()">
+                        Show Model
+                    </button>
+
+                    <br><br>
+
+                    <p>Model Date</p>
+                    <select id="dates" name="dates">
+                        <option value="2015_Q1">2015 Q1</option>
+                        <option value="2015_Q2">2015 Q2</option>
+                        <option value="2015_Q3">2015 Q3</option>
+                        <option value="2015_Q4">2015 Q4</option>
+                        <option value="2016_Q1">2016 Q1</option>
+                        <option value="2016_Q2">2016 Q2</option>
+                        <option value="2016_Q3">2016 Q3</option>
+                        <option value="2016_Q4">2016 Q4</option>
+                        <option value="2017_Q1">2017 Q1</option>
+                        <option value="2017_Q2">2017 Q2</option>
+                        <option value="2017_Q3">2017 Q3</option>
+                        <option value="2017_Q4">2017 Q4</option>
+                        <option value="2018_Q1">2018 Q1</option>
+                        <option value="2018_Q2">2018 Q2</option>
+                        <option value="2018_Q3">2018 Q3</option>
+                        <option value="2018_Q4">2018 Q4</option>
+                        <option value="2019_Q1">2019 Q1</option>
+                        <option value="2019_Q2">2019 Q2</option>
+                        <option value="2019_Q3">2019 Q3</option>
+                        <option value="2019_Q4">2019 Q4</option>
+                        <option value="2020_Q1">2020 Q1</option>
+                    </select>
+
+                    <br><br>
+
+                    <p>P Values</p>
+                    <select id="pvalues" name="pvalues">
+                        <option value="pval10">10</option>
+                        <option value="pval5">5</option>
+                    </select>
+
+                    <br><br>
+
+
+                    <h3>Indices</h3>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="AEX"> AEX - Europe</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="ATX"> ATX - Europe</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="BEL_20"> BEL20 - Eurpoe</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="Bovespa"> Bovespa - America</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="BSE_Sensex"> BSE Sensex - Asia</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="CAC40"> CAC40 - Eurpoe</label>
+                    </div>
+                     <div class="checkbox">
+                      <label><input type="checkbox" value="CSE"> CSE - America</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="DAX_PERFORMANCE.INDEX"> DAX Performance Index - Europe</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="Dow_30"> Dow 30 - America</label>
+                    </div>
+                     <div class="checkbox">
+                      <label><input type="checkbox" value="EURONEXT_100" > Euronext 100 - Eurpoe</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="HANG_SENG_INDEX"> Hang Seng Index - Asia</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="IBEX_35"> IBEX35 - Eurpoe</label>
+                    </div>
+                     <div class="checkbox">
+                      <label><input type="checkbox" value="IDX_Composite" > IDX Composite Index - Asia</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="KOSPI_Composite_Index"> KOSPI Composite Index - Asia</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="MOEX_Russia_Index" > MOEX Russia Index - Asia</label>
+                    </div>
+                     <div class="checkbox">
+                      <label><input type="checkbox" value="Nasdaq" > Nasdaq - America</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="Nifty_50" > Nifty50 - Asia</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="IPC_MEXICO" > IPC Mexico - America</label>
+                    </div>
+                     <div class="checkbox">
+                      <label><input type="checkbox" value="MERVAL" > Merval - America</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="Nikkei_225" > Nikkei 225 - Asia</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="Russell_2000" > Russell 2000 - America</label>
+                    </div>
+                     <div class="checkbox">
+                      <label><input type="checkbox" value="SP_500" > S&P 500 - America</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="SP_NZX_50_INDEX_GROSS"> SP NZX 50 Index Gross - Oceania</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" value="SP_TSX_Composite_index"> SP TSX Composite - America</label>
+                    </div>
+                    <div class="checkbox">
+                      <label><input  name="cmycheckboxes" type="checkbox" value="SMI" > SMI - Europe</label>
+                    </div>
+                    <br><br>
+
+                </div>
+
+                <div class="col-10">
+                    <div id="Area" class="row" style="height:100%; border: 5px solid black"></div>
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <br>
+                <br>
+                <p class="text-center">Data & Visual Analytics Team 134</p>
+                <br>
+            </div>
+        </div>
+
+    </div>
+    </body>
+
+    <script type="text/javascript" src='./index.js'></script>
+    <script>
+
+        function show_model() {
+            var date = document.getElementById("dates").value
+            var pvalue = document.getElementById("pvalues").value
+            var array = []
+            var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+            for (var i = 0; i < checkboxes.length; i++) {
+                array.push(checkboxes[i].value)
+            }
+            //console.log("here is date: " + date)
+            //console.log("here is pvalue: " + pvalue)
+            //console.log("here is inputs: " + array)
+            d3.select("#Area").select("svg").remove();
+            create_bar_plot(d3, "#Area", date, pvalue, array);
+        }
+    </script>
+</html>
